@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+    // 冒泡排序
+    let arr = [4, 3, 5, 3, 5, 4, 1];
+
+    console.time();
+    for (let max = arr.length - 1; max >= 0; max--) {
+        for (let i = 0; i < max; i++) {
+            if (arr[i] > arr[i + 1]) {
+                // 相邻对比最小值
+                swap(arr, i, i + 1)
+            }
+        }
+    }
+
+    console.log(`冒泡排序`, arr);
+    console.timeEnd();
+
+    function swap(arr, i, j) {
+        // 异或运算
+        arr[i] = arr[i] ^ arr[j];
+        arr[j] = arr[i] ^ arr[j];
+        arr[i] = arr[i] ^ arr[j];
+    }
+</script>
+
+</html>

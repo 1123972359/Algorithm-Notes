@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+<!-- <script>
+    // 异或运算
+    // 相同为0，不同为1
+    let a = 1,
+        b = 1;
+
+    a = a ^ b;
+    b = a ^ b;
+    a = a ^ b;
+
+    console.log(`a`, a);
+    console.log(`b`, b);
+</script> -->
+
+<!-- <script>
+    // array[int] 里面有 一 个数出现了奇数次，其他数出现了偶数次，找到这个奇数次的数
+    var arr = [1, 2, 2, 2, 3, 2, 1];
+
+    let e = 0;
+    for (let i = 0; i < arr.length; i++) {
+        e = e ^ arr[i]
+    }
+
+    console.log(`一个奇数次 e`, e);
+</script> -->
+
+<script>
+    // array[int] 里面有 两 个数出现了奇数次，其他数出现了偶数次，找到这个奇数次的数
+    // 假设 a b 两个出现了奇数次
+    var arr = [1, 1, 2, 3, 3, 4, 4, 4];
+
+    let e = 0;
+    for (let i = 0; i < arr.length; i++) {
+        e = e ^ arr[i]
+    }
+
+    // 此时 e 一定是 a ^ b
+    // a ^ b != 0, 那么a与b的某一位肯定是不同，一个是1，另一个是0
+    // 找出数组中最右边是1的数 => e & (~e + 1)
+    let rightOne = e & (~e + 1);
+
+    let onlyOne = 0;
+    for (let j = 0; j < arr.length; j++) {
+        if ((arr[j] & rightOne) === 0) {
+            onlyOne = arr[j]
+        }
+    }
+
+
+    console.log(`一个奇数次 a`, onlyOne);
+    console.log(`另一个奇数次 b`, e ^ onlyOne);
+</script>
+
+</html>

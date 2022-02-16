@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+    // 选择排序
+    let arr = [4, 3, 5, 3, 5, 4, 1];
+    console.time();
+    for (let i = 0; i < arr.length - 1; i++) {
+        let minIndex = i;
+        for (let j = i + 1; j < arr.length; j++) { // n-1 中找到最小值
+            minIndex = arr[minIndex] > arr[j] ? j : minIndex;
+        }
+        // 最小值 与 i 交换位置
+        swap(arr, i, minIndex);
+    }
+
+    console.log(`选择排序`, arr);
+    console.timeEnd();
+
+    function swap(arr, i, j) {
+        let tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+</script>
+
+</html>

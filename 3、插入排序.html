@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+    // 插入排序
+
+    // 0 ~ i 范围内想有序, 0 ~ 0 必有序，所以可以从1开始
+
+    // i 位置一直往左对比，小的交换位置，直到尽头
+
+    let arr = [2, 2, 1, 3, 3];
+
+    for (let i = 1; i < arr.length; i++) {
+        // j-- 是因为一直往左对比
+        for (let j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--) {
+            swap(arr, j, j + 1);
+        }
+    }
+
+    console.log(`插入排序`, arr);
+
+    function swap(arr, i, j) {
+        arr[i] ^= arr[j];
+        arr[j] ^= arr[i];
+        arr[i] ^= arr[j];
+    }
+</script>
+
+</html>
