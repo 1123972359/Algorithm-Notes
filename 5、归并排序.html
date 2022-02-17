@@ -82,7 +82,7 @@
 </script> -->
 
 
-<script>
+<!-- <script>
     // 求小和（归并排序）
 
     // 每个数左边比它小的数，加起来，叫小和
@@ -154,6 +154,76 @@
         }
 
         return sum;
+    }
+
+    console.log(main(arr));
+    console.log(arr);
+</script> -->
+
+
+<script>
+    // 逆序对问题（未解决，以下并不是答案，只是尝试解答）
+
+    // 在一个数组中，左边的数如果比右边的数大，则这两个数构成一个逆序对，请找到所有逆序对
+
+    let arr = [3, 2, 4, 5, 0];
+
+    // 解题思路: 跟上面求小和类似
+    // 32 30 20 40 50
+    // 最后一次归并前 ：234 05
+    // 反过来就是，右边有多少个数比当前左边的数小 ??????????????
+
+    function main(arr) {
+        let L = 0;
+        let R = arr.length - 1;
+
+        return process(arr, L, R);
+    }
+
+    function process(arr, L, R) {
+        if (L === R) {
+            return 0;
+        }
+
+        let mid = L + ((R - L) >>> 1);
+
+        return process(arr, L, mid) +
+            process(arr, mid + 1, R) +
+            merge(arr, L, mid, R)
+    }
+
+    function merge(arr, L, mid, R) {
+        let newArr = new Array(R - L + 1);
+
+        let i = 0;
+        let p1 = L;
+        let p2 = mid + 1
+
+        let res = 0;
+
+        while (p1 <= mid && p2 <= R) {
+            if (arr[p1] < arr[p2]) {
+                // res += (R - p2 + 1) * arr[p2] ??????????????
+                newArr[i++] = arr[p1++];
+            } else {
+                newArr[i++] = arr[p2++];
+            }
+        }
+
+        while (p1 <= mid) {
+            newArr[i++] = arr[p1++];
+        }
+
+        while (p2 <= R) {
+            newArr[i++] = arr[p2++];
+        }
+
+        for (let k = 0; k < newArr.length; k++) {
+            arr[L + k] = newArr[k]
+        }
+
+        return res
+
     }
 
     console.log(main(arr));
