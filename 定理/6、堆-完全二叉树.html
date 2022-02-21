@@ -14,4 +14,74 @@
 
   // 4、heapInsert 大根堆
   // 每次新增一个数，与父级做比较，大于父级的，交换位置，一直到top
+
+  // 5、heapify
+  // 堆化，从一个数开始，往下比
+</script>
+
+
+<script>
+  // 堆排序
+  let arr = [6, 7, 2, 3, 5, 4, 0];
+
+  function main(arr) {
+    return heapSort(arr);
+  }
+
+  function heapSort(arr) {
+    // 将数组变成大根堆
+
+    // for (let i = 0; i < arr.length; i++) {
+    //   heapInsert(arr, i);
+    // }
+
+    for (let i = arr.length - 1; i >= 0; i--) {
+      heapify(arr, i, arr.length)
+    }
+
+    let heapSize = arr.length;
+    swap(arr, 0, --heapSize);
+    while (heapSize > 0) {
+      heapify(arr, 0, heapSize);
+      swap(arr, 0, --heapSize);
+    }
+
+    return arr;
+  }
+
+  function heapInsert(arr, i) {
+    // 跟父节点做比较
+    while (arr[i] > arr[parseInt((i - 1) / 2)]) {
+      swap(arr, i, parseInt((i - 1) / 2));
+      i = parseInt((i - 1) / 2)
+    }
+  }
+
+  function heapify(arr, i, heapSize) {
+    let left = 2 * i + 1;
+
+    while (left < heapSize) {
+      // 两个节点选最大值
+      let largest = left + 1 < heapSize && arr[left + 1] > arr[left] ? left + 1 : left;
+      // 父与最大节点做比较
+      largest = arr[largest] > arr[i] ? largest : i;
+      // 相等。停止
+      if (largest === i) {
+        break;
+      }
+
+      swap(arr, largest, i);
+      i = largest;
+      left = 2 * i + 1;
+    }
+  }
+
+  console.log(main(arr));
+
+
+  function swap(arr, i, j) {
+    let temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
 </script>
