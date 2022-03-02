@@ -145,7 +145,7 @@
   }
 </script>
 
-<script>
+<!-- <script>
   // 判断链表是否有环
   function isLoop(list) {
     // 使用快慢指针
@@ -164,4 +164,45 @@
     }
     console.log("this list has no rings");
   }
+</script> -->
+
+<!-- <script>
+  // 反转单链表
+
+  function reverse(head) {
+    let pre = null;
+    let mid = head;
+    let next = null;
+
+    while (mid !== null) {
+      next = mid.next;
+      mid.next = pre;
+      pre = mid;
+      mid = next;
+    }
+
+    return pre;
+  }
+
+  list.head = reverse(list.head);
+</script> -->
+
+<script>
+  // 打印两个有序链表的公共部分
+
+  // 解题思路: 两个指针，谁小谁移动，相等的同时移动，有一个越界，停
+</script>
+
+<script>
+  // 判断一个链表是否为回文结构
+
+  // 解题思路1：准备一个栈，进栈出栈
+
+  // 解题思路2：利用快慢指针，快指针走两步，慢指针走一步，快指针走完的时候，慢指针停中间。准备一个栈，慢指针后面内容进栈出栈
+
+  // 解题思路3：
+  // 额外空间复杂度O(1)
+  // 利用快慢指针，慢指针到中间的时候，将中间的节点指向null，后面的部分逆序
+  // 然后左右节点向中间判断是否相等
+  // 返回结果前将链表还原
 </script>
