@@ -145,28 +145,7 @@
   }
 </script>
 
-<!-- <script>
-  // 判断链表是否有环
-  function isLoop(list) {
-    // 使用快慢指针
-    var p = list.head;
-    var q = list.head;
-
-    while (q) {
-      p = p.next;
-      if (p.next) {
-        q = q.next.next;
-      }
-      if (p === q) {
-        console.log("this list has rings");
-        return;
-      }
-    }
-    console.log("this list has no rings");
-  }
-</script> -->
-
-<!-- <script>
+<script>
   // 反转单链表
 
   function reverse(head) {
@@ -185,7 +164,7 @@
   }
 
   list.head = reverse(list.head);
-</script> -->
+</script>
 
 <script>
   // 打印两个有序链表的公共部分
@@ -205,4 +184,156 @@
   // 利用快慢指针，慢指针到中间的时候，将中间的节点指向null，后面的部分逆序
   // 然后左右节点向中间判断是否相等
   // 返回结果前将链表还原
+</script>
+
+<script>
+  // 给定一个链表，给定一个数值，要求节点必数组小的在左边，相等的中间，大于的右边
+
+  // 解题思路:
+  // 笔试：将node节点放进数组，进行partition，再串起来
+  // 面试：给定6个变量，小头，小尾，等头，等尾，大头，大尾。进行遍历
+
+  // 面试 O(1)
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // !!!! 代码未完善，因为缺乏考虑如果没有小于、等于、大于的情况
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  let list = new SingleList();
+  let arr = [5, 4, 6, 4, 7, 8, 9, 5, 1, 3, 7];
+  arr.forEach((item) => list.append(item));
+  let num = 5;
+
+  function main() {
+    let sH = null;
+    let sF = null;
+    let mH = null;
+    let mF = null;
+    let bH = null;
+    let bF = null;
+
+    let head = list.head;
+
+    let curr = head.next;
+
+    while (curr) {
+      if (curr.data < num) {
+        if (sH === null) {
+          sH = curr;
+          sF = curr;
+        } else if (sH && sF === null) {
+          sH.next = curr;
+          sF = curr;
+        } else {
+          sF.next = curr;
+          sF = curr;
+        }
+      } else if (curr.data > num) {
+        if (bH === null) {
+          bH = curr;
+          bF = curr;
+        } else if (bH && bF === null) {
+          bH.next = curr;
+          bF = curr;
+        } else {
+          bF.next = curr;
+          bF = curr;
+        }
+      } else {
+        if (mH === null) {
+          mH = curr;
+          mF = curr;
+        } else if (mH && mF === null) {
+          mH.next = curr;
+          mF = curr;
+        } else {
+          mF.next = curr;
+          mF = curr;
+        }
+      }
+      curr = curr.next;
+    }
+    mF.next = bH;
+    sF.next = mH;
+    head.next = sH;
+    console.log(list.display());
+  }
+</script>
+
+<script>
+  // 给定一个单链表，每个节点上面有random指针，随机指向某个节点，或者null
+  // 复制一个新的链表出来，要求结构相同（包括random指针）
+  // 返回新链表的头
+
+  // 解题思路
+  // 使用hash表，一一对应
+  // 不使用额外空间：每个节点复制出一个新的节点，放在旧节点next，每个取一对进行操作
+
+  // Node(1)->Node(1')->Node(2)->Node(2')->Node(3)->Node(3')->null
+
+  function main() {
+    let head = list.head;
+    let curr = head.next;
+    let next = null;
+
+    while (curr) {
+      // 当前
+      next = curr.next;
+      let newCurr = new Node(curr.data + "'");
+      curr.next = newCurr;
+      newCurr.next = next;
+
+      curr = newCurr.next;
+    }
+
+    curr = head;
+
+    while (curr) {
+      // 处理random指针
+      // newCurr.random = curr.random ? curr.random.next : null;
+      curr = curr.next.next;
+    }
+
+    console.log(list.display());
+  }
+</script>
+
+<script>
+  // 判断链表是否有环
+  // 入环第一个节点
+
+  // 解题思路
+  // 1、使用set，set里有的即是第一个入环节点
+  // 2、使用快慢指针，快指针走两步，慢指针走一步，快慢指针相遇时，证明有环，快指针如果结束，真没无环
+  //    假设相遇后，快指针回到head，开始一步一步走，当快慢指针相遇时，即入环第一个节点
+
+  function isLoop() {
+    let fast = list.head;
+    let slow = list.head;
+
+    while (fast.next && fast.next.next) {
+      slow = slow.next;
+      fast = fast.next.next;
+
+      if (slow === fast) {
+        fast = list.head;
+        break;
+      }
+    }
+
+    if (fast === list.head) {
+      while (fast !== slow) {
+        fast = fast.next;
+        slow = slow.next;
+      }
+      return slow;
+    }
+
+    return false;
+  }
+</script>
+
+<script>
+  // 给定两个可能有环也可能无环的单链表，头节点head1和head2.请事先一个函数，如果两个链表相交
+  // 请返回相交的第一个节点，如果不相交，返回null
+
+  // 【要求】如果两个链表长度之和为N，时间复杂度请达到O(N)，额外空间复杂度达到O(1)
 </script>
