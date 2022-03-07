@@ -305,7 +305,7 @@
   // 2、使用快慢指针，快指针走两步，慢指针走一步，快慢指针相遇时，证明有环，快指针如果结束，真没无环
   //    假设相遇后，快指针回到head，开始一步一步走，当快慢指针相遇时，即入环第一个节点
 
-  function isLoop() {
+  function getLoopNode() {
     let fast = list.head;
     let slow = list.head;
 
@@ -336,4 +336,109 @@
   // 请返回相交的第一个节点，如果不相交，返回null
 
   // 【要求】如果两个链表长度之和为N，时间复杂度请达到O(N)，额外空间复杂度达到O(1)
+
+  // ==========================================================================================
+  // 【第一种情况：两个无环链表】
+  // 解题思路：假设两条链表相交，那么最后一个节点，内存地址一定相同。然后根据两条链表的长度
+  //           差值 = 长链表 - 短链表，长链表先走差值步，然后长链表与短链表一起走，一直走到第一个相交节点
+  //           end1，end2，len1，len2
+  // ==========================================================================================
+
+  function noLoop(head1, head2) {
+    let cur1 = head1;
+    let cur2 = head2;
+
+    // 巧妙的设计, n 即是两条链表长度插值
+    let n = 0;
+    while (cur1.next !== null) {
+      n++;
+      cur1 = cur1.next;
+    }
+    while (cur2.next !== null) {
+      n--;
+      cur2 = cur2.next;
+    }
+
+    // 长的链表放到cur1，短的链表放到cur2
+    cur1 = n > 0 ? head1 : head2;
+    cur2 = cur1 === head1 ? head2 : head1;
+
+    n = Math.abs(n);
+    while (n != 0) {
+      n--;
+      cur1 = cur1.next;
+    }
+    while (cur1 !== cur2) {
+      cur1 = cur1.next;
+      cur2 = cur2.next;
+    }
+    return cur1;
+  }
+
+  // ==========================================================================================
+  // 【第二种情况：两个有环链表相交，两个入环节点相同】
+  //  解题思路：找到入环节点，当作无环节点相交的end，然后复用无环链表的代码，不用处理环
+  // ==========================================================================================
+
+  // ==========================================================================================
+  // 【第三种情况：两个有环链表相交，两个入环节点不相同】
+  //  解题思路：两个链表的相交节点为loop1，loop2，然后loop1继续走，直到遇到loop2为止，即相交，则
+  //            loop1 或 loop2都叫相交的第一个节点
+  // ==========================================================================================
+
+  function bothLoop(head1, head2, loop1, loop2) {
+    let cur1 = null;
+    let cur2 = null;
+
+    if (loop1 === loop2) {
+      // 第二种情况
+      cur1 = head1;
+      cur2 = head2;
+      let n = 0;
+      // 入环第一个节点作为end
+      while (cur1 !== loop1) {
+        n++;
+        cur1 = cur1.next;
+      }
+      while (cur2 !== loop2) {
+        n--;
+        cur2 = cur2.next;
+      }
+      cur1 = n > 0 ? head1 : head2;
+      cur2 = head1 === cur1 ? head2 : head1;
+      n = Math.abs(n);
+      while (n !== 0) {
+        n--;
+        cur1 = cur1.next;
+      }
+      while (cur1 !== cur2) {
+        cur1 = cur1.next;
+        cur2 = cur2.next;
+      }
+      return cur1;
+    } else {
+      // 第三种情况
+      cur1 = loop1.next;
+      while (cur1 !== loop1) {
+        if (cur1 === loop2) {
+          return loop1;
+        }
+        cur1 = cur1.next;
+      }
+      // 不相交返回null
+      return null;
+    }
+  }
+
+  function main(head1, head2) {
+    let loop1 = getLoopNode(head1);
+    let loop2 = getLoopNode(head2);
+    if (loop1 === null && loop2 === null) {
+      return noLoop(head1, head2);
+    }
+    if (loop1 !== null && loop2 !== null) {
+      return bothLoop(head1, head2, loop1, loop2);
+    }
+    return null;
+  }
 </script>

@@ -1,0 +1,117 @@
+<script>
+  // 二叉树节点结构
+  class Node {
+    constructor() {
+      this.value = null;
+      this.left = null;
+      this.right = null;
+    }
+  }
+</script>
+
+<script>
+  // 伪代码:
+  function f(head) {
+    if (head === null) {
+      return;
+    }
+    f(head.left);
+    f(head.right);
+  }
+
+  // 递归序
+  // 1,2,4,4,4,2,5,5,5,2,1,3,6,6,6,3,7,7,7,3,1
+
+  // 先序 (头左右, 第一次打印) 1,2,4,5,3,6,7
+  // 中序 (左头右, 第二次打印) 4,2,5,1,6,3,7
+  // 后序 (左右头, 第三次打印) 4,5,2,6,7,3,1
+</script>
+
+<script>
+  // 非递归序
+
+  // ================================================================
+  // 先序遍历: 准备一个栈
+  //    1) 从栈中弹出一个节点cur
+  //    2) 打印（处理）cur
+  //    3) 先右再左（如果有）
+  //    4) 回到1)
+  // ================================================================
+
+  // head: Node
+  function preOrderUnRecur(head) {
+    if (head !== null) {
+      let stack = [];
+      stack.push(head);
+
+      while (stack.length > 0) {
+        head = stack.pop();
+        console.log(head.value + " ");
+
+        if (head.right !== null) {
+          stack.push(head.right);
+        }
+
+        if (head.left !== null) {
+          stack.push(head.left);
+        }
+      }
+    }
+  }
+
+  // ================================================================
+  // 后序遍历: 准备两个栈
+  //    1) 从栈中弹出一个节点cur
+  //    2) cur放入收集栈
+  //    3) 先左再右（如果有）
+  //    4) 回到1)
+  // ================================================================
+
+  // head: Node
+  function posOrderUnRecur1(head) {
+    if (head !== null) {
+      let s1 = [];
+      let s2 = []; // 收集栈
+      s1.pop(head);
+
+      while (s1.length > 0) {
+        head = s1.pop();
+        s2.push(head);
+        if (head.left !== null) {
+          s1.pop(head.left);
+        }
+        if (head.right !== null) {
+          s1.pop(head.right);
+        }
+      }
+
+      while (s2.length > 0) {
+        console.log(s2.pop().value);
+      }
+    }
+  }
+
+  // ================================================================
+  // 中序遍历: 准备一个栈
+  //    1) 每棵子树整棵树左边界进栈
+  //    2) 依次弹出，打印，如弹出节点有右树，对弹出节点右树，回到1)
+  // ================================================================
+
+  // head: Node
+  function inOrderUnRecur(head) {
+    if (head !== null) {
+      let stack = [];
+
+      while (stack.length > 0 || head !== null) {
+        if (head !== null) {
+          stack.push(head);
+          head = head.left;
+        } else {
+          head = stack.pop();
+          console.log(head.value);
+          head = head.right;
+        }
+      }
+    }
+  }
+</script>
