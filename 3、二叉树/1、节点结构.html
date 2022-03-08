@@ -15,8 +15,11 @@
     if (head === null) {
       return;
     }
+    console.log(`先序`)
     f(head.left);
+    console.log(`中序`)
     f(head.right);
+    console.log(`后序`)
   }
 
   // 递归序
@@ -72,16 +75,16 @@
     if (head !== null) {
       let s1 = [];
       let s2 = []; // 收集栈
-      s1.pop(head);
+      s1.push(head);
 
       while (s1.length > 0) {
         head = s1.pop();
         s2.push(head);
         if (head.left !== null) {
-          s1.pop(head.left);
+          s1.push(head.left);
         }
         if (head.right !== null) {
-          s1.pop(head.right);
+          s1.push(head.right);
         }
       }
 

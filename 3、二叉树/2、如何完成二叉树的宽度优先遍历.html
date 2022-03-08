@@ -1,0 +1,110 @@
+<script>
+  // 如何完成二叉树的宽度优先遍历（常见：求一棵二叉树的宽度）
+
+  // 二叉树的深度优先遍历 -> 先序遍历
+
+  // ================================================================
+  // 宽度对比用队列，先进先出
+  // ================================================================
+  function w(head) {
+    if (head === null) {
+      return;
+    }
+    let queue = [];
+    queue.push(head);
+    while (queue.length > 0) {
+      head = queue.shift();
+      console.log(head.value);
+      if (head.left !== null) {
+        queue.push(head.left);
+      }
+      if (head.right !== null) {
+        queue.push(head.right);
+      }
+    }
+  }
+
+  // ================================================================
+  // 求一棵二叉树的宽度(使用Hash map)
+  // ================================================================
+  function getMaxWidth(head) {
+    if (head === null) {
+      return;
+    }
+
+    let queue = [];
+    queue.push(head);
+
+    let levelMap = new Map(); // 层级map
+    levelMap.set(head, 1);
+    let curLevel = 1; // 当前层级
+    let curCount = 0; // 当前数量
+    let max = Number.MIN_VALUE; // 最大宽度
+
+    while (queue.length > 0) {
+      let cur = queue.shift();
+      let level = levelMap.get(cur);
+
+      if (level === curLevel) {
+        curCount++;
+      } else {
+        max = Math.max(curCount, max);
+        curCount = 1;
+        curLevel++;
+      }
+
+      if (cur.left !== null) {
+        levelMap.set(cur.left, level + 1);
+        queue.push(cur.left);
+      }
+      if (cur.right !== null) {
+        levelMap.set(cur.right, level + 1);
+        queue.push(cur.right);
+      }
+    }
+    return max;
+  }
+
+  // ================================================================
+  // 求一棵二叉树的宽度(不使用Hash map)
+  // ================================================================
+  function getMaxWidth(head) {
+    if (head === null) {
+      return;
+    }
+    let queue = [];
+    queue.push(head);
+
+    let curNodeEnd = head;
+    let nextNodeEnd = null;
+    let count = 0;
+    let max = Number.MIN_VALUE;
+
+    while (queue.length > 0) {
+      let cur = queue.shift();
+
+      if (curNodeEnd === cur) {
+        // 这层结束
+        count++;
+        curNodeEnd = nextNodeEnd;
+        nextNodeEnd = null;
+        max = Math.max(max, count);
+        count = 0;
+      } else {
+        count++;
+      }
+
+      if (cur.left !== null) {
+        nextNodeEnd = cur.left;
+        queue.push(cur.left);
+      }
+
+      if (cur.right !== null) {
+        nextNodeEnd = cur.right;
+        queue.push(cur.right);
+      }
+    }
+
+    return max;
+  }
+</script>
