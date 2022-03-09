@@ -1,0 +1,61 @@
+<script>
+  // 二叉树解题套路 :
+  // 找到判断的条件，并且放到左右子树上得到
+
+  // ================================================================
+  // 比如搜索二叉树:
+  // 整数是否搜索二叉树需要满足条件
+  // 1) 左树是搜索二叉树，左树最大值小于头节点
+  // 2) 右树是搜索二叉树, 右树最小值大于头节点
+  // ================================================================
+
+  // 定义返回类型
+  function returnType(isBst, min, max) {
+    return {
+      isBst,
+      min,
+      max,
+    };
+  }
+
+  function main(head) {
+    return process(head).isBst;
+  }
+
+  function process(head) {
+    if (head === null) {
+      return null;
+    }
+
+    let leftData = process(head.left);
+    let rightData = process(head.right);
+
+    let min = head.value;
+    let max = head.value;
+
+    if (leftData !== null) {
+      min = Math.min(min, leftData.min);
+      max = Math.max(max, leftData.max);
+    }
+
+    if (rightData !== null) {
+      min = Math.min(min, rightData.min);
+      max = Math.max(max, rightData.max);
+    }
+
+    let isBst = true;
+
+    if (leftData !== null && (!leftData.isBst || leftData.max >= head.value)) {
+      isBst = false;
+    }
+
+    if (
+      rightData !== null &&
+      (!rightData.isBst || rightData.min <= head.value)
+    ) {
+      isBst = false;
+    }
+
+    return returnType(isBst, min, max);
+  }
+</script>

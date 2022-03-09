@@ -83,6 +83,16 @@
     while (queue.length > 0) {
       let cur = queue.shift();
 
+      if (cur.left !== null) {
+        nextNodeEnd = cur.left;
+        queue.push(cur.left);
+      }
+
+      if (cur.right !== null) {
+        nextNodeEnd = cur.right;
+        queue.push(cur.right);
+      }
+
       if (curNodeEnd === cur) {
         // 这层结束
         count++;
@@ -92,16 +102,6 @@
         count = 0;
       } else {
         count++;
-      }
-
-      if (cur.left !== null) {
-        nextNodeEnd = cur.left;
-        queue.push(cur.left);
-      }
-
-      if (cur.right !== null) {
-        nextNodeEnd = cur.right;
-        queue.push(cur.right);
       }
     }
 

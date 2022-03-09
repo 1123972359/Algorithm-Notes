@@ -1,0 +1,47 @@
+<script>
+  // 完全二叉树
+  // 节点从左到右铺满
+  // 不满足条件:
+  //    1) 任一节点，有右无左，直接false
+  //    2) 满足1)的情况下，如果遇到了第一个左右子节点不双全，那么后续遇到的必须全是叶节点
+
+  // 解题思路：宽度优先遍历
+  function checkCMT(head) {
+    if (head === null) {
+      return true;
+    }
+    let queue = [];
+    queue.push(head);
+    let l = null;
+    let r = null;
+    let isLeaf = false;
+
+    while (queue.length > 0) {
+      head = queue.shift();
+      l = head.left;
+      r = head.right;
+
+      // 判断 1) 与 2)
+      if (
+        (isLeaf && (l !== null || r !== null)) ||
+        (l === null && r !== null)
+      ) {
+        return false;
+      }
+
+      if (l !== null) {
+        queue.push(l);
+      }
+
+      if (r !== null) {
+        queue.push(r);
+      }
+
+      if (l === null || r === null) {
+        isLeaf = true;
+      }
+    }
+
+    return true;
+  }
+</script>
