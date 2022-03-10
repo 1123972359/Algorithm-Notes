@@ -1,6 +1,38 @@
 <script>
   // 满二叉树
-  // 1) 写一个函数，求最大深度 L
+  // 1) 写一个函数，求最大深度 L (最大高度)
   // 2) 写一个函数，求节点数 N
   // 3) 满足 N = 2^L - 1
+
+  // ================================================================
+  // 满二叉树，使用套路解法
+  // 当前head高度: 左右树最高的树+1 => 1就是算上head
+  // 当前head节点数：左右树节点+1
+  // ================================================================
+
+  function main(head) {
+    let info = f(head);
+    return info.nodes === 2 * info.height - 1;
+  }
+
+  function Info(height, nodes) {
+    return {
+      height,
+      nodes,
+    };
+  }
+
+  function f(head) {
+    if (head === null) {
+      return new Info(0, 0);
+    }
+
+    let leftData = f(head.left);
+    let rightData = f(head.right);
+
+    let height = Math.max(leftData.height, rightData.height) + 1;
+    let nodes = leftData.nodes + rightData.nodes + 1;
+
+    return new Info(height, nodes);
+  }
 </script>

@@ -1,0 +1,58 @@
+<script>
+  // 给定两个二叉树的节点node1和node2，找到他们的最低公共祖先
+
+  // ================================================================
+  // 方法1 (通俗易懂)
+  // ================================================================
+  function main(head, node1, node2) {
+    let fatherMap = new Map();
+    fatherMap.set(head, head);
+    f(head, fatherMap);
+
+    let set1 = new Set();
+    let cur = node1;
+    while (cur !== fatherMap.get(cur)) {
+      set1.add(cur);
+      cur = fatherMap.get(cur);
+    }
+    set1.add(head);
+
+    cur = node2;
+    while (cur !== set1.get(cur)) {
+      cur = fatherMap.get(cur);
+    }
+
+    return cur;
+  }
+
+  function f(head, fatherMap) {
+    if (head === null) {
+      return;
+    }
+
+    fatherMap(head.left, head);
+    fatherMap(head.right, head);
+
+    f(head.left, fatherMap);
+    f(head.right, fatherMap);
+  }
+
+  // ================================================================
+  // 方法2（精简但抽象）
+  // ================================================================
+  function getLCA(head, node1, node2) {
+    if (head === null || head === node1 || head === node2) {
+      return head;
+    }
+
+    let left = getLCA(head.left, node1, node2);
+    let right = getLCA(head.right, node1, node2);
+
+    if (left !== null && right !== null) {
+      // 找到最低公共节点了
+      return head;
+    }
+
+    return left !== null ? left : right;
+  }
+</script>

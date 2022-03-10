@@ -1,0 +1,45 @@
+<script>
+  // 后继节点：中序节点的下一个节点
+  // 前驱节点：中序节点的上一个节点
+
+  // 题型为新的树结构
+  class Node {
+    constructor(data) {
+      this.value = data;
+      this.left = null;
+      this.right = null;
+      this.parent = null;
+    }
+  }
+
+  // ================================================================
+  // 求某个节点的后继节点
+  // 1) x 有右树的话，后继节点是 x.right
+  // 2) x 没有右树的话，一直往上找，直到是 Y 树的左树，后继是 Y。找到head也不是，后继为null
+  // ================================================================
+  function findNextNodes(node) {
+    if (node === null) {
+      return node;
+    }
+    if (node.right !== null) {
+      return getLeftNode(node.right);
+    } else {
+      let parent = node.parent;
+      while (parent !== null && parent.left !== node) {
+        node = parent;
+        parent = parent.parent;
+      }
+      return parent;
+    }
+  }
+
+  function getLeftNode(node) {
+    if (node === null) {
+      return node;
+    }
+    while (node.left !== null) {
+      node = node.left;
+    }
+    return node;
+  }
+</script>
