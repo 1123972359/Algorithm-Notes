@@ -4,5 +4,51 @@
   // 就是内存里的一棵树如何变成字符串形式，又如何从字符串形式变成内存里的树
   // 如何判断一颗二叉树是不是另一棵二叉树的子树
 
-  
+  // 序列化：内存转成字符串
+  // 反序列化: 字符串转成内存
+
+  // ================================================================
+  // 序列化（使用先序）
+  // ================================================================
+  function f(head) {
+    if (head === null) {
+      return "#_";
+    }
+    let str = head.value + "_";
+    str += f(head.left);
+    str += f(head.right);
+    return str;
+  }
+
+  // ================================================================
+  // 反序列化（使用先序）
+  // ================================================================
+  class Node {
+    constructor(data) {
+      this.value = data;
+      this.left = null;
+      this.right = null;
+    }
+  }
+
+  function fan(str) {
+    let list = str.split("_");
+    let queue = [];
+    for (let i = 0; i < list.length; i++) {
+      queue.push(list[i]);
+    }
+    return get(queue);
+  }
+
+  function get(queue) {
+    let value = queue.shift();
+    if (value === "#") {
+      return null;
+    }
+    let head = new Node(parseInt(cur));
+    head.left = get(queue);
+    head.right = get(queue);
+
+    return head;
+  }
 </script>

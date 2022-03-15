@@ -1,0 +1,57 @@
+<script>
+  // 图的存储方式
+  // 1) 邻接表
+  // 2) 邻接矩阵
+</script>
+
+<script>
+  class Node {
+    constructor(value) {
+      this.value = value;
+      this.in = 0;
+      this.out = 0;
+      nexts = [];
+      edges = [];
+    }
+  }
+
+  class Edge {
+    constructor(weight, from, to) {
+      this.weight = weight;
+      this.from = from;
+      this.to = to;
+    }
+  }
+
+  class Graph {
+    constructor() {
+      this.nodes = new Map(); // 点集
+      this.edges = new Set(); // 边集
+    }
+
+    // martix int[][]
+    createGraph(martix) {
+      let graph = new Graph();
+      for (let i = 0; i < martix.length; i++) {
+        let from = martix[i][0];
+        let to = martix[i][1];
+        let weight = martix[i][2];
+        if (!graph.nodes.has(from)) {
+          graph.nodes.set(from, new Node(from));
+        }
+        if (!graph.nodes.has(to)) {
+          graph.nodes.set(to, new Node(to));
+        }
+        let fromNode = graph.nodes.get(from);
+        let toNode = graph.nodes.get(to);
+        let newEdge = new Edge(weight, fromNode, toNode);
+        fromNode.nexts.add(toNode);
+        fromNode.out++;
+        toNode.in++;
+        fromNode.edges.add(newEdge);
+        graph.edges.add(newEdge);
+      }
+      return graph;
+    }
+  }
+</script>

@@ -1,0 +1,42 @@
+<script>
+  // 深度优先遍历
+  // 1、利用栈实现
+  // 2、从源节点开始依次按照深度进栈，然后弹出
+  // 3、每弹出一个点，把该节点所有没有进过栈的邻接点放入栈
+  // 4、直到栈变空
+
+  class Node {
+    constructor(value) {
+      this.value = value;
+      this.in = 0;
+      this.out = 0;
+      nexts = [];
+      edges = [];
+    }
+  }
+
+  function dfs(node) {
+    if (node === null) {
+      return;
+    }
+    let stack = [];
+    let set = new Set();
+    stack.push(node);
+    set.add(node);
+    console.log(node.value);
+
+    while (stack.length > 0) {
+      let cur = stack.pop(0);
+      for (let i in cur.nexts) {
+        if (!set.has(cur.nexts[i])) {
+          set.add(cur.nexts[i]);
+          stack.push(cur);
+          stack.push(cur.nexts[i]);
+
+          console.log(cur.nexts[i]);
+          break;
+        }
+      }
+    }
+  }
+</script>

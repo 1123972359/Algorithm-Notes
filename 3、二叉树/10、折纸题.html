@@ -1,0 +1,22 @@
+<script>
+  // 一张纸，对折n次，打印折痕方向
+
+  // 解题思路：中序遍历(实践出真知)
+
+  function main(N) {
+    process(1, N, true);
+  }
+
+  // i 节点的层数
+  // N 一共的层数
+  // down == true 凹
+  // down == false 凸
+  function process(i, N, down) {
+    if (i > N) {
+      return;
+    }
+    process(i + 1, N, true);
+    console.log(down ? "凹" : "凸");
+    process(i + 1, N, false);
+  }
+</script>

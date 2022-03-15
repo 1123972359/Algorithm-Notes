@@ -1,0 +1,38 @@
+<script>
+  // 图的宽度优先遍历
+  // 1、利用队列实现
+  // 2、从源节点开始依次按照宽度进队列，然后弹出
+  // 3、每弹出一个点，把该节点所有没有进过队列的邻接点放入队列
+  // 4、直到队列变空
+
+  class Node {
+    constructor(value) {
+      this.value = value;
+      this.in = 0;
+      this.out = 0;
+      nexts = [];
+      edges = [];
+    }
+  }
+
+  function bfs(node) {
+    if (node === null) {
+      return;
+    }
+    let queue = [];
+    let set = new Set();
+    queue.add(node);
+    set.add(node);
+    while (queue.length > 0) {
+      let cur = queue.shift();
+      console.log(cur.value);
+
+      for (let i in cur.nexts) {
+        if (!set.has(cur.nexts[i])) {
+          set.add(cur.nexts[i]);
+          queue.push(cur.nexts[i]);
+        }
+      }
+    }
+  }
+</script>
