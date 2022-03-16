@@ -1,4 +1,38 @@
 <script>
   // 拓扑排序算法
   // 使用范围：要求有向图，且有入度为0的节点，且没有环
+
+  class Graph {
+    constructor() {
+      this.nodes = new Map(); // 点集
+      this.edges = new Set(); // 边集
+    }
+  }
+
+  function sortedTopology(graph) {
+    // key: 某一个node
+    // value: 剩余的入度
+    let inMap = new Map();
+    // 入度为0的点，才能进这个队列
+    let zeroInQueue = [];
+    for (let i in graph.nodes) {
+      inMap.set(graph.nodes[i], graph.nodes[i].in);
+      if (graph.nodes[i].in === 0) {
+        zeroInQueue.push(graph.nodes[i]);
+      }
+    }
+    // 拓扑排序的结果，一次加入result
+    let result = [];
+    while (zeroInQueue.length > 0) {
+      let cur = zeroInQueue.shift();
+      result.add(cur);
+      for (let i in cur.nexts) {
+        inMap.set(cur.nexts[i], inMap.get(cur.nexts[i]) - 1);
+        if (inMap.get(cur.nexts[i]) === 0) {
+          zeroInQueue.push(cur.nexts[i]);
+        }
+      }
+    }
+    return result;
+  }
 </script>

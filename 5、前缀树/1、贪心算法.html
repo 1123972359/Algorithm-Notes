@@ -1,0 +1,32 @@
+<script>
+  // 贪心算法
+  // 在某一个标准下，优先考虑最满足标准的样本，最后考虑最不满足标准的样本
+  // 最终得到一个答案的算法
+
+  // ================================================================
+  // 安排会议，可以安排最多的次数
+  // ================================================================
+  class Program {
+    constructor(start, end) {
+      this.start = start; // 会议开始时间
+      this.end = end; // 会议结束时间
+    }
+  }
+
+  function compare(o1, o2) {
+    return o1.end - o2.end;
+  }
+
+  let timePoint = 0;
+  function bestArrange(programs, timePoint) {
+    Array.sort(programs, compare);
+    let result = 0;
+    for (let i = 0; i < programs.length; i++) {
+      if (timePoint <= programs[i].start) {
+        result++;
+        timePoint = programs[i].end;
+      }
+    }
+    return result;
+  }
+</script>
